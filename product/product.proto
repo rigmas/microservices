@@ -1,0 +1,23 @@
+syntax = "proto3";
+package product;
+
+option go_package = "handlers/product_grpc";
+
+message Product {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  int32 price = 4;
+  int32 quantity = 5;
+  string createdAt = 6;
+}
+
+message ProductListRequest {}
+
+message ProductListResponse {
+  repeated Product products = 1;
+}
+
+service ProductService {
+  rpc ProductList(ProductListRequest) returns (ProductListResponse) {}
+}
