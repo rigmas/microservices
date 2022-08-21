@@ -1,0 +1,18 @@
+version: "3.3"
+
+services:
+  gateway:
+    build:
+      context: .
+      dockerfile: ./gateway/Dockerfile
+    container_name: gateway
+    restart: on-failure
+    ports:
+      - "8989:8989"
+  customer:
+    build:
+      context: .
+      dockerfile: ./customer/Dockerfile
+    container_name: customer
+    restart: on-failure
+    
