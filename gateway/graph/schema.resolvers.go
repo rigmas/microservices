@@ -9,6 +9,7 @@ import (
 	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
 	"github.com/rigmas/microservices/gateway/graph/generated"
 	"github.com/rigmas/microservices/gateway/graph/model"
+	"github.com/rigmas/microservices/product/handlers/product_grpc"
 )
 
 // Health is the resolver for the health field.
@@ -29,11 +30,11 @@ func (r *mutationResolver) Register(ctx context.Context, username string, passwo
 		return nil, err
 	}
 
-	res := model.RegisterResponse{
+	res := &model.RegisterResponse{
 		Token: resp.Token,
 	}
 
-	return &res, nil
+	return res, nil
 }
 
 // Ping is the resolver for the ping field.
@@ -45,25 +46,21 @@ func (r *queryResolver) Ping(ctx context.Context) (string, error) {
 func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) {
 	var products []*model.Product
 
-	product1 := &model.Product{
-		ID:          "1",
-		Title:       "Iphone",
-		Description: "Iphone 13 Pro",
-		Price:       18_000_000,
-		Quantity:    20,
-		CreatedAt:   "2022-08-15 17:01:36.399357+03",
+	resp, err := r.ProductService.ProductList(ctx, &product_grpc.ProductListRequest{})
+	if err != nil {
+		return nil, err
 	}
 
-	product2 := &model.Product{
-		ID:          "2",
-		Title:       "Airpods",
-		Description: "Airpods Pro 2",
-		Price:       4_000_000,
-		Quantity:    40,
-		CreatedAt:   "2022-08-16 17:01:36.399357+03",
+	for _, product := range resp.Products {
+		products = append(products, &model.Product{
+			ID:          product.Id,
+			Title:       product.Title,
+			Description: product.Description,
+			Price:       int(product.Price),
+			Quantity:    int(product.Quantity),
+			CreatedAt:   product.CreatedAt,
+		})
 	}
-
-	products = append(products, product1, product2)
 
 	return products, nil
 }

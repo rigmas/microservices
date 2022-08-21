@@ -14,6 +14,7 @@ import (
 	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
 	"github.com/rigmas/microservices/gateway/graph"
 	"github.com/rigmas/microservices/gateway/graph/generated"
+	"github.com/rigmas/microservices/product/handlers/product_grpc"
 	"github.com/rs/cors"
 	"google.golang.org/grpc"
 )
@@ -26,6 +27,7 @@ func main() {
 
 	//setup gRPC client connection
 	var customerClient customer_grpc.CustomerServiceClient
+	var productClient product_grpc.ProductServiceClient
 
 	customerConnection, err := acquireConnection("customer")
 	if err != nil {
@@ -36,8 +38,18 @@ func main() {
 		defer customerConnection.Close()
 	}
 
+	productConnection, err := acquireConnection("product")
+	if err != nil {
+		log.Fatalf("connection to product_service failed")
+	} else {
+		productClient = product_grpc.NewProductServiceClient(productConnection)
+		log.Printf("connection to product_service established")
+		defer productConnection.Close()
+	}
+
 	resolver := graph.Resolver{
 		CustomerService: customerClient,
+		ProductService:  productClient,
 	}
 
 	//inject gprc services into graphql

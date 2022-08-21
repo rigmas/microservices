@@ -5,8 +5,12 @@ package graph
 // It serves as dependency injection for your app, add any dependencies you require here.
 //go:generate go run github.com/99designs/gqlgen
 
-import "github.com/rigmas/microservices/customer/handlers/customer_grpc"
+import (
+	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
+	"github.com/rigmas/microservices/product/handlers/product_grpc"
+)
 
 type Resolver struct {
 	CustomerService customer_grpc.CustomerServiceClient
+	ProductService  product_grpc.ProductServiceClient
 }
