@@ -7,10 +7,27 @@ type HealthcheckResponse {
   healthiness: String!
 }
 
+type RegisterResponse {
+  token: String!
+}
+
+type Product {
+  id: String!
+  title: String!
+  description: String!
+  price: Int!
+  quantity: Int!
+  createdAt: String!
+}
+
 type Query {
   ping: String!
+
+  products: [Product!]
 }
 
 type Mutation {
   health: HealthcheckResponse!
+
+  register(username: String!, password: String!): RegisterResponse!
 }

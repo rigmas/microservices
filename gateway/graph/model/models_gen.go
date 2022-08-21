@@ -6,3 +6,16 @@ type HealthcheckResponse struct {
 	Message     string `json:"message"`
 	Healthiness string `json:"healthiness"`
 }
+
+type Product struct {
+	ID          string `json:"id"`
+	Title       string `json:"title"`
+	Description string `json:"description"`
+	Price       int    `json:"price"`
+	Quantity    int    `json:"quantity"`
+	CreatedAt   string `json:"createdAt"`
+}
+
+type RegisterResponse struct {
+	Token string `json:"token"`
+}

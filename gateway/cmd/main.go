@@ -1,16 +1,21 @@
 package main
 
 import (
+	"context"
+	"fmt"
 	"log"
 	"net/http"
 	"os"
+	"time"
 
 	"github.com/99designs/gqlgen/graphql/handler"
 	"github.com/99designs/gqlgen/graphql/playground"
 	"github.com/go-chi/chi/v5"
+	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
 	"github.com/rigmas/microservices/gateway/graph"
 	"github.com/rigmas/microservices/gateway/graph/generated"
 	"github.com/rs/cors"
+	"google.golang.org/grpc"
 )
 
 func main() {
@@ -19,10 +24,30 @@ func main() {
 		port = "8989"
 	}
 
-	srv := handler.NewDefaultServer(generated.NewExecutableSchema(generated.Config{Resolvers: &graph.Resolver{}}))
+	//setup gRPC client connection
+	var customerClient customer_grpc.CustomerServiceClient
 
-	r := chi.NewRouter() //Initialize chi router
+	customerConnection, err := acquireConnection("customer")
+	if err != nil {
+		log.Fatalf("connection to customer_service failed")
+	} else {
+		customerClient = customer_grpc.NewCustomerServiceClient(customerConnection)
+		log.Printf("connection to customer_service established")
+		defer customerConnection.Close()
+	}
 
+	resolver := graph.Resolver{
+		CustomerService: customerClient,
+	}
+
+	//inject gprc services into graphql
+	srv := handler.NewDefaultServer(
+		generated.NewExecutableSchema(
+			generated.Config{Resolvers: &resolver},
+		),
+	)
+
+	r := chi.NewRouter()           //Initialize chi router
 	r.Use(cors.AllowAll().Handler) //allow cors
 
 	r.Handle("/", playground.Handler("GraphQL playground", "/query"))
@@ -30,4 +55,21 @@ func main() {
 
 	log.Printf("Server is running on port: %s\n", port)
 	log.Fatal(http.ListenAndServe(":"+port, r))
+}
+
+func acquireConnection(serviceName string) (*grpc.ClientConn, error) {
+	dialCtx, cancel := context.WithTimeout(context.Background(), 10*time.Second)
+	defer cancel()
+
+	conn, err := grpc.DialContext(
+		dialCtx,
+		fmt.Sprintf("%s:9000", serviceName),
+		grpc.WithInsecure(),
+		grpc.WithBlock(),
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	return conn, nil
 }
