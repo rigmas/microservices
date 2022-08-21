@@ -7,6 +7,13 @@ type HealthcheckResponse struct {
 	Healthiness string `json:"healthiness"`
 }
 
+type Order struct {
+	InvoiceNumber string     `json:"invoiceNumber"`
+	PaymentAmount int        `json:"paymentAmount"`
+	CreatedAt     string     `json:"createdAt"`
+	OrderItems    []*Product `json:"orderItems"`
+}
+
 type Product struct {
 	ID          string `json:"id"`
 	Title       string `json:"title"`

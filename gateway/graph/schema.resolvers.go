@@ -5,6 +5,7 @@ package graph
 
 import (
 	"context"
+	"time"
 
 	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
 	"github.com/rigmas/microservices/gateway/graph/generated"
@@ -63,6 +64,50 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 	}
 
 	return products, nil
+}
+
+// Orders is the resolver for the orders field.
+func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
+	var orders []*model.Order
+	var products []*model.Product
+	var totalAmount int
+	const invoiceNumber string = "TEST123XXX"
+	createdAt := time.Now().String()
+
+	product1 := &model.Product{
+		ID:          "1",
+		Title:       "Iphone",
+		Description: "Iphone 13 Pro",
+		Price:       18_000_000,
+		Quantity:    1,
+		CreatedAt:   "2022-08-15 17:01:36.399357+03",
+	}
+
+	product2 := &model.Product{
+		ID:          "2",
+		Title:       "Airpods",
+		Description: "Airpods Pro 2",
+		Price:       4_000_000,
+		Quantity:    1,
+		CreatedAt:   "2022-08-16 17:01:36.399357+03",
+	}
+
+	products = append(products, product1, product2)
+
+	for _, product := range products {
+		totalAmount += (product.Price * product.Quantity)
+	}
+
+	orderItem := &model.Order{
+		InvoiceNumber: invoiceNumber,
+		PaymentAmount: totalAmount,
+		CreatedAt:     createdAt,
+		OrderItems:    products,
+	}
+
+	orders = append(orders, orderItem)
+
+	return orders, nil
 }
 
 // Mutation returns generated.MutationResolver implementation.

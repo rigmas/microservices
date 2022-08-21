@@ -20,10 +20,19 @@ type Product {
   createdAt: String!
 }
 
+type Order {
+  invoiceNumber: String!
+  paymentAmount: Int!
+  createdAt: String!
+  orderItems: [Product!]
+}
+
 type Query {
   ping: String!
 
   products: [Product!]
+
+  orders: [Order!]
 }
 
 type Mutation {
