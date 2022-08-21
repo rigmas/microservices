@@ -25,7 +25,7 @@ func main() {
 
 	r.Use(cors.AllowAll().Handler) //allow cors
 
-	r.Handle("/", playground.Handler("GraphQL playground", "query"))
+	r.Handle("/", playground.Handler("GraphQL playground", "/query"))
 	r.Handle("/query", srv)
 
 	log.Printf("Server is running on port: %s\n", port)
