@@ -15,4 +15,11 @@ services:
       dockerfile: ./customer/Dockerfile
     container_name: customer
     restart: on-failure
+  product:
+    build:
+      context: .
+      dockerfile: ./product/Dockerfile
+    container_name: product
+    restart: on-failure
+  
     
