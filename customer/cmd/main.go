@@ -24,7 +24,7 @@ func main() {
 	//register service to gRPC
 	customer_grpc.RegisterCustomerServiceServer(grpcServer, &s)
 
-	log.Println("auth service grpc is running")
+	log.Println("customer service grpc is running")
 	if err := grpcServer.Serve(lis); err != nil {
 		log.Fatalf("failed to rune due to %s\n", err)
 	}
