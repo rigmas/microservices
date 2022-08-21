@@ -1,0 +1,385 @@
+{
+	"info": {
+		"_postman_id": "c98cc3e6-575c-4eca-a4b5-961d50544eb8",
+		"name": "E-commerce microservices",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "12543856"
+	},
+	"item": [
+		{
+			"name": "ping  - query health check application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query ping {\n  ping\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "ping response - query health check application",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query ping {\n  ping\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8989/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"query"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Aug 2022 16:02:30 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "24"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"ping\": \"pong\"\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "health - mutation health check application",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation health {\n  health {\n      message, healthiness\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "health response -health check application",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation health {\n  health {\n      message, healthiness\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8989/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"query"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Aug 2022 16:03:41 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "63"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"health\": {\n            \"message\": \"ready\",\n            \"healthiness\": \"healthy\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "register new customer",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "mutation ($username: String!, $pass: String!) {\n  register(username: $username, password: $pass) {\n    token\n  }\n}",
+						"variables": "{\n    \"username\": \"samuelgrs\",\n    \"pass\": \"xxx\"\n}"
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "register new customer",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "mutation ($username: String!, $pass: String!) {\n  register(username: $username, password: $pass) {\n    token\n  }\n}",
+								"variables": "{\n    \"username\": \"samuelgrs\",\n    \"pass\": \"xxx\"\n}"
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8989/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"query"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Aug 2022 16:13:34 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "65"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"register\": {\n            \"token\": \"username:samuelgrs-password:xxx\"\n        }\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "fetch product list",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query productlist {\n  products {\n    id, title, description, price, quantity, createdAt\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "fetch product list",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query productlist {\n  products {\n    id, title, description, price, quantity, createdAt\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8989/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"query"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Aug 2022 16:15:00 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "289"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"products\": [\n            {\n                \"id\": \"1\",\n                \"title\": \"Iphone\",\n                \"description\": \"Iphone 13 Pro\",\n                \"price\": 18000000,\n                \"quantity\": 20,\n                \"createdAt\": \"2022-08-15 17:01:36.399357+03\"\n            },\n            {\n                \"id\": \"2\",\n                \"title\": \"Airpods\",\n                \"description\": \"Airpods Pro 2\",\n                \"price\": 4000000,\n                \"quantity\": 40,\n                \"createdAt\": \"2022-08-16 17:01:36.399357+03\"\n            }\n        ]\n    }\n}"
+				}
+			]
+		},
+		{
+			"name": "fetch order list",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "graphql",
+					"graphql": {
+						"query": "query orderList {\n  orders {\n    invoiceNumber, \n    paymentAmount, \n    createdAt, \n    orderItems {\n    \tid, title, description, price, quantity, createdAt\n    }\n  }\n}",
+						"variables": ""
+					}
+				},
+				"url": {
+					"raw": "http://localhost:8989/query",
+					"protocol": "http",
+					"host": [
+						"localhost"
+					],
+					"port": "8989",
+					"path": [
+						"query"
+					]
+				}
+			},
+			"response": [
+				{
+					"name": "fetch order list",
+					"originalRequest": {
+						"method": "POST",
+						"header": [],
+						"body": {
+							"mode": "graphql",
+							"graphql": {
+								"query": "query orderList {\n  orders {\n    invoiceNumber, \n    paymentAmount, \n    createdAt, \n    orderItems {\n    \tid, title, description, price, quantity, createdAt\n    }\n  }\n}",
+								"variables": ""
+							}
+						},
+						"url": {
+							"raw": "http://localhost:8989/query",
+							"protocol": "http",
+							"host": [
+								"localhost"
+							],
+							"port": "8989",
+							"path": [
+								"query"
+							]
+						}
+					},
+					"status": "OK",
+					"code": 200,
+					"_postman_previewlanguage": "json",
+					"header": [
+						{
+							"key": "Content-Type",
+							"value": "application/json"
+						},
+						{
+							"key": "Vary",
+							"value": "Origin"
+						},
+						{
+							"key": "Date",
+							"value": "Sun, 21 Aug 2022 16:16:04 GMT"
+						},
+						{
+							"key": "Content-Length",
+							"value": "427"
+						}
+					],
+					"cookie": [],
+					"body": "{\n    \"data\": {\n        \"orders\": [\n            {\n                \"invoiceNumber\": \"TEST123XXX\",\n                \"paymentAmount\": 22000000,\n                \"createdAt\": \"2022-08-21 16:16:04.585670926 +0000 UTC m=+907.537148281\",\n                \"orderItems\": [\n                    {\n                        \"id\": \"1\",\n                        \"title\": \"Iphone\",\n                        \"description\": \"Iphone 13 Pro\",\n                        \"price\": 18000000,\n                        \"quantity\": 1,\n                        \"createdAt\": \"2022-08-15 17:01:36.399357+03\"\n                    },\n                    {\n                        \"id\": \"2\",\n                        \"title\": \"Airpods\",\n                        \"description\": \"Airpods Pro 2\",\n                        \"price\": 4000000,\n                        \"quantity\": 1,\n                        \"createdAt\": \"2022-08-16 17:01:36.399357+03\"\n                    }\n                ]\n            }\n        ]\n    }\n}"
+				}
+			]
+		}
+	]
+}
