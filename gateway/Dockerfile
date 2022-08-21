@@ -8,6 +8,7 @@ COPY gateway gateway
 
 # gRPC client services
 COPY customer customer
+COPY product product
 
 RUN go build -o gateway_service ./gateway/cmd/
 
