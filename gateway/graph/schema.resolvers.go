@@ -5,20 +5,22 @@ package graph
 
 import (
 	"context"
-	"fmt"
 
 	"github.com/rigmas/microservices/gateway/graph/generated"
 	"github.com/rigmas/microservices/gateway/graph/model"
 )
 
-// CreateTodo is the resolver for the createTodo field.
-func (r *mutationResolver) CreateTodo(ctx context.Context, input model.NewTodo) (*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: CreateTodo - createTodo"))
+// Health is the resolver for the health field.
+func (r *mutationResolver) Health(ctx context.Context) (*model.HealthcheckResponse, error) {
+	return &model.HealthcheckResponse{
+		Message:     "ready",
+		Healthiness: "healthy",
+	}, nil
 }
 
-// Todos is the resolver for the todos field.
-func (r *queryResolver) Todos(ctx context.Context) ([]*model.Todo, error) {
-	panic(fmt.Errorf("not implemented: Todos - todos"))
+// Ping is the resolver for the ping field.
+func (r *queryResolver) Ping(ctx context.Context) (string, error) {
+	return "pong", nil
 }
 
 // Mutation returns generated.MutationResolver implementation.
