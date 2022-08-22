@@ -7,10 +7,12 @@ package graph
 
 import (
 	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
+	"github.com/rigmas/microservices/order/handlers/order_grpc"
 	"github.com/rigmas/microservices/product/handlers/product_grpc"
 )
 
 type Resolver struct {
 	CustomerService customer_grpc.CustomerServiceClient
 	ProductService  product_grpc.ProductServiceClient
+	OrderService    order_grpc.OrderServiceClient
 }

@@ -5,11 +5,11 @@ package graph
 
 import (
 	"context"
-	"time"
 
 	"github.com/rigmas/microservices/customer/handlers/customer_grpc"
 	"github.com/rigmas/microservices/gateway/graph/generated"
 	"github.com/rigmas/microservices/gateway/graph/model"
+	"github.com/rigmas/microservices/order/handlers/order_grpc"
 	"github.com/rigmas/microservices/product/handlers/product_grpc"
 )
 
@@ -27,6 +27,7 @@ func (r *mutationResolver) Register(ctx context.Context, username string, passwo
 		Username: username,
 		Password: password,
 	})
+
 	if err != nil {
 		return nil, err
 	}
@@ -70,42 +71,32 @@ func (r *queryResolver) Products(ctx context.Context) ([]*model.Product, error) 
 func (r *queryResolver) Orders(ctx context.Context) ([]*model.Order, error) {
 	var orders []*model.Order
 	var products []*model.Product
-	var totalAmount int
-	const invoiceNumber string = "TEST123XXX"
-	createdAt := time.Now().String()
 
-	product1 := &model.Product{
-		ID:          "1",
-		Title:       "Iphone",
-		Description: "Iphone 13 Pro",
-		Price:       18_000_000,
-		Quantity:    1,
-		CreatedAt:   "2022-08-15 17:01:36.399357+03",
+	resp, err := r.OrderService.OrderList(ctx,
+		&order_grpc.OrderListRequest{UserId: "1"},
+	)
+	if err != nil {
+		return nil, err
 	}
 
-	product2 := &model.Product{
-		ID:          "2",
-		Title:       "Airpods",
-		Description: "Airpods Pro 2",
-		Price:       4_000_000,
-		Quantity:    1,
-		CreatedAt:   "2022-08-16 17:01:36.399357+03",
+	for _, order := range resp.Orders {
+		for _, product := range order.Products {
+			products = append(products, &model.Product{
+				ID:          product.Id,
+				Title:       product.Title,
+				Description: product.Description,
+				Price:       int(product.Price),
+				Quantity:    int(product.Quantity),
+				CreatedAt:   product.CreatedAt,
+			})
+		}
+		orders = append(orders, &model.Order{
+			InvoiceNumber: order.InvoiceNumber,
+			PaymentAmount: int(order.PaymentAmount),
+			CreatedAt:     order.CreatedAt,
+			OrderItems:    products,
+		})
 	}
-
-	products = append(products, product1, product2)
-
-	for _, product := range products {
-		totalAmount += (product.Price * product.Quantity)
-	}
-
-	orderItem := &model.Order{
-		InvoiceNumber: invoiceNumber,
-		PaymentAmount: totalAmount,
-		CreatedAt:     createdAt,
-		OrderItems:    products,
-	}
-
-	orders = append(orders, orderItem)
 
 	return orders, nil
 }
