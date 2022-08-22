@@ -1,9 +1,12 @@
 # Introduction
 
 `SIMPLE E-COMMERCE` <br/>
-This is prototype of e-commerce microservices backend systems. <br/>
-This microservices backend systems built with Go programming language with graphQL as a gateway server and gRPC as a services.
-<br/><br/>
+This is prototype of e-commerce microservices backend system. <br/>
+This microservices backend system built with Go programming language with graphQL as a gateway server and gRPC as a services.
+<br/>
+
+System design and usecase diagram of this backend system is provided on `docs` folder.
+<br><br>
 
 # Getting Started
 
@@ -25,4 +28,4 @@ Prerequisites:
 
 # How to Test
 
-This project is consists of unit tests, to run the test you can go into unit test files and click on `run package tests`
+This project is consists of unit tests, to run the test you can go into unit test files on your vscode and click on `run package tests`
