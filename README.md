@@ -28,4 +28,4 @@ Prerequisites:
 
 # How to Test
 
-This project is consists of unit tests, to run the test you can go into unit test files on your vscode and click on `run package tests`
+This project is consists of unit tests, to run the test you can go into unit test files `*_test.go` on your vscode and click on `run package tests`
