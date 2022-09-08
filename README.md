@@ -8,6 +8,9 @@ This microservices backend system built with Go programming language with graphQ
 System design and usecase diagram of this backend system is provided on `docs` folder.
 <br><br>
 
+Tech stack:
+Go, graphQL, gRPC
+
 # Getting Started
 
 Prerequisites:
